@@ -3,7 +3,7 @@ WORKDIR /app
 COPY go.mod ./
 RUN go mod download
 COPY . .
-RUN go build -o auto-merge-prs main.go
+RUN go build -o auto-merge main.go
 
 FROM alpine:latest
 RUN apk add --no-cache bash curl git jq
