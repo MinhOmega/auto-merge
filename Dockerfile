@@ -14,13 +14,16 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o auto-merge-prs main.go
+RUN go build -o auto-merge main.go
 
 # Start a new stage from scratch
 FROM alpine:latest
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/auto-merge-prs /usr/local/bin/auto-merge-prs
+COPY --from=builder /app/auto-merge /usr/local/bin/auto-merge
+
+# Add label with source information
+LABEL org.opencontainers.image.source="https://github.com/MinhOmega/auto-merge"
 
 # Command to run the executable
-ENTRYPOINT ["/usr/local/bin/auto-merge-prs"]
+ENTRYPOINT ["/usr/local/bin/auto-merge"]
