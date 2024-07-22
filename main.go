@@ -46,12 +46,19 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Debug: Print environment variables
+	fmt.Printf("Environment Variables:\n")
+	fmt.Printf("SLEEP_DURATION=%d\n", sleepDuration)
+	fmt.Printf("TIMEOUT_MINUTES=%d\n", timeoutMinutes)
+	fmt.Printf("BASE_BRANCH=%s\n", baseBranch)
+	fmt.Printf("GITHUB_TOKEN=%s\n", githubToken)
+
 	// Load GitHub event data
 	eventPath := os.Getenv("GITHUB_EVENT_PATH")
 	eventData := loadPullRequestEvent(eventPath)
 
 	// Authenticate GitHub CLI
-	if _, err := execCommand("gh", "auth", "login", "--with-token", githubToken); err != nil {
+	if _, err := execCommand("sh", "-c", fmt.Sprintf("echo %s | gh auth login --with-token", githubToken)); err != nil {
 		fmt.Printf("Error authenticating GitHub CLI: %v\n", err)
 		os.Exit(1)
 	}
