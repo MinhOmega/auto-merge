@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Auto-Merge PRs
-        uses: MinhOmega/auto-merge@v1.0.1
+        uses: MinhOmega/auto-merge@v1.0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
