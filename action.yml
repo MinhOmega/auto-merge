@@ -13,7 +13,7 @@ inputs:
   timeout_minutes:
     description: 'Timeout for the merge process (in minutes)'
     required: false
-    default: '1440'
+    default: '10'
   base_branch:
     description: 'Base branch to check against'
     required: false
@@ -24,9 +24,11 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/minhomega/auto-merge:v1.0.4'
+  image: 'ghcr.io/minhomega/auto-merge:v1.0.5'
   env:
     SLEEP_DURATION: ${{ inputs.sleep_duration }}
     TIMEOUT_MINUTES: ${{ inputs.timeout_minutes }}
     BASE_BRANCH: ${{ inputs.base_branch }}
-    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GH_TOKEN: ${{ inputs.github_token }}
+    GITHUB_EVENT_PATH: ${{ github.event_path }}
+    GITHUB_REPOSITORY: ${{ github.repository }}
